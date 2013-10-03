@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Learn Kana</title>
+	<title>Type Kana</title>
 
 	<!-- Loading Bootstrap -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     	position: absolute;
 		top: 50%;
 		width: 100%;
-		margin-top: -150px;
+		margin-top: -80px;
     }
 	.title {
 		margin-bottom: 20px;
@@ -71,18 +71,28 @@
 	.buttons a {
 		font-weight: 100;
 	}
+
+	.hidden {
+		display:none;
+	}
+
+	.btn-start {
+		padding-right: 8px !important;
+	}
     </style>
 </head>
 <body>
 	<div class='main-container'>
 		<h2 class='title'>Type Kana</h2>
-		<div class='kana'>
-     		<div class='kana-container'></div>
+		<div class='main-content hidden'>
+			<div class='kana'>
+	     		<div class='kana-container'></div>
+	     	</div>
+	     	<div class='romaji'>
+	     		<div class='romaji-container'></div>
+	     	</div>
      	</div>
-     	<div class='romaji'>
-     		<div class='romaji-container' contenteditable="true"></div>
-     	</div>
-     	<div class="buttons">
+     	<div class="buttons buttons-score hidden">
  			<a class="btn btn-huge btn-info btn-embossed mlm">
  				<span class="fui-time"></span> &nbsp; <span class='time'>0:00</span>
  			</a>
@@ -94,12 +104,18 @@
  				<span class='fui-checkbox-checked'></span> &nbsp; <span class='score'>0 / 100</span>
 			</a>
      	</div>
+     	<div class="buttons buttons-start">
+			<a class="btn btn-huge btn-info btn-embossed mlm btn-start">
+ 				<span class='start'>Start</span>
+ 				<span class="fui-arrow-right"></span>
+ 			</a>
      	</div>
      </div>
 	<script src="js/jquery-1.8.3.min.js"></script>
 	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script>
 	var romajiToHiragana = {"a":"あ","i":"い","u":"う","e":"え","o":"お","yi":"い","wu":"う","whu":"う","xa":"ぁ","xi":"ぃ","xu":"ぅ","xe":"ぇ","xo":"ぉ","xyi":"ぃ","xye":"ぇ","ye":"いぇ","wha":"うぁ","whi":"うぃ","whe":"うぇ","who":"うぉ","wi":"うぃ","we":"うぇ","va":"ゔぁ","vi":"ゔぃ","vu":"ゔ","ve":"ゔぇ","vo":"ゔぉ","vya":"ゔゃ","vyi":"ゔぃ","vyu":"ゔゅ","vye":"ゔぇ","vyo":"ゔょ","ka":"か","ki":"き","ku":"く","ke":"け","ko":"こ","lka":"ヵ","lke":"ヶ","xka":"ヵ","xke":"ヶ","kya":"きゃ","kyi":"きぃ","kyu":"きゅ","kye":"きぇ","kyo":"きょ","qya":"くゃ","qyu":"くゅ","qyo":"くょ","qwa":"くぁ","qwi":"くぃ","qwu":"くぅ","qwe":"くぇ","qwo":"くぉ","qa":"くぁ","qi":"くぃ","qe":"くぇ","qo":"くぉ","kwa":"くぁ","qyi":"くぃ","qye":"くぇ","ga":"が","gi":"ぎ","gu":"ぐ","ge":"げ","go":"ご","gya":"ぎゃ","gyi":"ぎぃ","gyu":"ぎゅ","gye":"ぎぇ","gyo":"ぎょ","gwa":"ぐぁ","gwi":"ぐぃ","gwu":"ぐぅ","gwe":"ぐぇ","gwo":"ぐぉ","sa":"さ","si":"し","shi":"し","su":"す","se":"せ","so":"そ","za":"ざ","zi":"じ","zu":"ず","ze":"ぜ","zo":"ぞ","ji":"じ","sya":"しゃ","syi":"しぃ","syu":"しゅ","sye":"しぇ","syo":"しょ","sha":"しゃ","shu":"しゅ","she":"しぇ","sho":"しょ","swa":"すぁ","swi":"すぃ","swu":"すぅ","swe":"すぇ","swo":"すぉ","zya":"じゃ","zyi":"じぃ","zyu":"じゅ","zye":"じぇ","zyo":"じょ","ja":"じゃ","ju":"じゅ","je":"じぇ","jo":"じょ","jya":"じゃ","jyi":"じぃ","jyu":"じゅ","jye":"じぇ","jyo":"じょ","ta":"た","ti":"ち","tu":"つ","te":"て","to":"と","chi":"ち","tsu":"つ","ltu":"っ","xtu":"っ","tya":"ちゃ","tyi":"ちぃ","tyu":"ちゅ","tye":"ちぇ","tyo":"ちょ","cha":"ちゃ","chu":"ちゅ","che":"ちぇ","cho":"ちょ","cya":"ちゃ","cyi":"ちぃ","cyu":"ちゅ","cye":"ちぇ","cyo":"ちょ","tsa":"つぁ","tsi":"つぃ","tse":"つぇ","tso":"つぉ","tha":"てゃ","thi":"てぃ","thu":"てゅ","the":"てぇ","tho":"てょ","twa":"とぁ","twi":"とぃ","twu":"とぅ","twe":"とぇ","two":"とぉ","da":"だ","di":"ぢ","du":"づ","de":"で","do":"ど","dya":"ぢゃ","dyi":"ぢぃ","dyu":"ぢゅ","dye":"ぢぇ","dyo":"ぢょ","dha":"でゃ","dhi":"でぃ","dhu":"でゅ","dhe":"でぇ","dho":"でょ","dwa":"どぁ","dwi":"どぃ","dwu":"どぅ","dwe":"どぇ","dwo":"どぉ","na":"な","ni":"に","nu":"ぬ","ne":"ね","no":"の","nya":"にゃ","nyi":"にぃ","nyu":"にゅ","nye":"にぇ","nyo":"にょ","ha":"は","hi":"ひ","hu":"ふ","he":"へ","ho":"ほ","fu":"ふ","hya":"ひゃ","hyi":"ひぃ","hyu":"ひゅ","hye":"ひぇ","hyo":"ひょ","fya":"ふゃ","fyu":"ふゅ","fyo":"ふょ","fwa":"ふぁ","fwi":"ふぃ","fwu":"ふぅ","fwe":"ふぇ","fwo":"ふぉ","fa":"ふぁ","fi":"ふぃ","fe":"ふぇ","fo":"ふぉ","fyi":"ふぃ","fye":"ふぇ","ba":"ば","bi":"び","bu":"ぶ","be":"べ","bo":"ぼ","bya":"びゃ","byi":"びぃ","byu":"びゅ","bye":"びぇ","byo":"びょ","pa":"ぱ","pi":"ぴ","pu":"ぷ","pe":"ぺ","po":"ぽ","pya":"ぴゃ","pyi":"ぴぃ","pyu":"ぴゅ","pye":"ぴぇ","pyo":"ぴょ","ma":"ま","mi":"み","mu":"む","me":"め","mo":"も","mya":"みゃ","myi":"みぃ","myu":"みゅ","mye":"みぇ","myo":"みょ","ya":"や","yu":"ゆ","yo":"よ","xya":"ゃ","xyu":"ゅ","xyo":"ょ","ra":"ら","ri":"り","ru":"る","re":"れ","ro":"ろ","rya":"りゃ","ryi":"りぃ","ryu":"りゅ","rye":"りぇ","ryo":"りょ","la":"ら","li":"り","lu":"る","le":"れ","lo":"ろ","lya":"りゃ","lyi":"りぃ","lyu":"りゅ","lye":"りぇ","lyo":"りょ","wa":"わ","wo":"を","lwe":"ゎ","xwa":"ゎ","n":"ん","nn":"ん","n ":"ん","xn":"ん","ltsu":"っ"};
+
     var hiraganaToRomaji = {"あ":["a"],"い":["i","yi"],"う":["u","wu","whu"],"え":["e"],"お":["o"],"ぁ":["xa"],"ぃ":["xi","xyi"],"ぅ":["xu"],"ぇ":["xe","xye"],"ぉ":["xo"],"いぇ":["ye"],"うぁ":["wha"],"うぃ":["whi","wi"],"うぇ":["whe","we"],"うぉ":["who"],"ゔぁ":["va"],"ゔぃ":["vi","vyi"],"ゔ":["vu"],"ゔぇ":["ve","vye"],"ゔぉ":["vo"],"ゔゃ":["vya"],"ゔゅ":["vyu"],"ゔょ":["vyo"],"か":["ka"],"き":["ki"],"く":["ku"],"け":["ke"],"こ":["ko"],"ヵ":["lka","xka"],"ヶ":["lke","xke"],"きゃ":["kya"],"きぃ":["kyi"],"きゅ":["kyu"],"きぇ":["kye"],"きょ":["kyo"],"くゃ":["qya"],"くゅ":["qyu"],"くょ":["qyo"],"くぁ":["qwa","qa","kwa"],"くぃ":["qwi","qi","qyi"],"くぅ":["qwu"],"くぇ":["qwe","qe","qye"],"くぉ":["qwo","qo"],"が":["ga"],"ぎ":["gi"],"ぐ":["gu"],"げ":["ge"],"ご":["go"],"ぎゃ":["gya"],"ぎぃ":["gyi"],"ぎゅ":["gyu"],"ぎぇ":["gye"],"ぎょ":["gyo"],"ぐぁ":["gwa"],"ぐぃ":["gwi"],"ぐぅ":["gwu"],"ぐぇ":["gwe"],"ぐぉ":["gwo"],"さ":["sa"],"し":["si","shi"],"す":["su"],"せ":["se"],"そ":["so"],"ざ":["za"],"じ":["zi","ji"],"ず":["zu"],"ぜ":["ze"],"ぞ":["zo"],"しゃ":["sya","sha"],"しぃ":["syi"],"しゅ":["syu","shu"],"しぇ":["sye","she"],"しょ":["syo","sho"],"すぁ":["swa"],"すぃ":["swi"],"すぅ":["swu"],"すぇ":["swe"],"すぉ":["swo"],"じゃ":["zya","ja","jya"],"じぃ":["zyi","jyi"],"じゅ":["zyu","ju","jyu"],"じぇ":["zye","je","jye"],"じょ":["zyo","jo","jyo"],"た":["ta"],"ち":["ti","chi"],"つ":["tu","tsu"],"て":["te"],"と":["to"],"っ":["ltu","xtu","ltsu"],"ちゃ":["tya","cha","cya"],"ちぃ":["tyi","cyi"],"ちゅ":["tyu","chu","cyu"],"ちぇ":["tye","che","cye"],"ちょ":["tyo","cho","cyo"],"つぁ":["tsa"],"つぃ":["tsi"],"つぇ":["tse"],"つぉ":["tso"],"てゃ":["tha"],"てぃ":["thi"],"てゅ":["thu"],"てぇ":["the"],"てょ":["tho"],"とぁ":["twa"],"とぃ":["twi"],"とぅ":["twu"],"とぇ":["twe"],"とぉ":["two"],"だ":["da"],"ぢ":["di"],"づ":["du"],"で":["de"],"ど":["do"],"ぢゃ":["dya"],"ぢぃ":["dyi"],"ぢゅ":["dyu"],"ぢぇ":["dye"],"ぢょ":["dyo"],"でゃ":["dha"],"でぃ":["dhi"],"でゅ":["dhu"],"でぇ":["dhe"],"でょ":["dho"],"どぁ":["dwa"],"どぃ":["dwi"],"どぅ":["dwu"],"どぇ":["dwe"],"どぉ":["dwo"],"な":["na"],"に":["ni"],"ぬ":["nu"],"ね":["ne"],"の":["no"],"にゃ":["nya"],"にぃ":["nyi"],"にゅ":["nyu"],"にぇ":["nye"],"にょ":["nyo"],"は":["ha"],"ひ":["hi"],"ふ":["hu","fu"],"へ":["he"],"ほ":["ho"],"ひゃ":["hya"],"ひぃ":["hyi"],"ひゅ":["hyu"],"ひぇ":["hye"],"ひょ":["hyo"],"ふゃ":["fya"],"ふゅ":["fyu"],"ふょ":["fyo"],"ふぁ":["fwa","fa"],"ふぃ":["fwi","fi","fyi"],"ふぅ":["fwu"],"ふぇ":["fwe","fe","fye"],"ふぉ":["fwo","fo"],"ば":["ba"],"び":["bi"],"ぶ":["bu"],"べ":["be"],"ぼ":["bo"],"びゃ":["bya"],"びぃ":["byi"],"びゅ":["byu"],"びぇ":["bye"],"びょ":["byo"],"ぱ":["pa"],"ぴ":["pi"],"ぷ":["pu"],"ぺ":["pe"],"ぽ":["po"],"ぴゃ":["pya"],"ぴぃ":["pyi"],"ぴゅ":["pyu"],"ぴぇ":["pye"],"ぴょ":["pyo"],"ま":["ma"],"み":["mi"],"む":["mu"],"め":["me"],"も":["mo"],"みゃ":["mya"],"みぃ":["myi"],"みゅ":["myu"],"みぇ":["mye"],"みょ":["myo"],"や":["ya"],"ゆ":["yu"],"よ":["yo"],"ゃ":["xya"],"ゅ":["xyu"],"ょ":["xyo"],"ら":["ra","la"],"り":["ri","li"],"る":["ru","lu"],"れ":["re","le"],"ろ":["ro","lo"],"りゃ":["rya","lya"],"りぃ":["ryi","lyi"],"りゅ":["ryu","lyu"],"りぇ":["rye","lye"],"りょ":["ryo","lyo"],"わ":["wa"],"を":["wo"],"ゎ":["lwe","xwa"],"ん":["n","nn","n ","xn"]};
 
     var whatDoIKnow = [
@@ -124,22 +140,38 @@
     	// 'ぢゃ', 'ぢゅ', 'ぢょ',
     	'びゃ', 'びゅ', 'びょ',
     	'ぴゃ', 'ぴょ', 'ぴょ'
-
     ];
 
     function rand(a, b) {
     	return Math.floor(Math.random() * (b - a) + a);
     }
 
-    for (var i = 0; i < 100; i++) {
-    	$('.kana-container').append('<span class="white">' + whatDoIKnow[rand(0, whatDoIKnow.length - 1)] + '</span>');
-    }
-    
     $('body, html').click(function () {
     	$('.romaji-container').focus();
     })
 
     var score = 0, time, timer;
+    var started = false;
+
+    $('.btn-start').click(function () {
+    	started = true;
+    	$(this).parent().fadeOut(200, function () {
+    		$('.main-content').slideDown();
+    		$('.main-container').animate({
+    			'margin-top': '-150px'
+    		});
+    		$('.buttons-score').fadeIn();
+    		$('.romaji-container').attr('contenteditable', true).focus();
+
+    		$('.time').text('0:00');
+    		$('.score').text('0/100');
+
+    		$('.kana-container').html('').attr('style', '');
+    		for (var i = 0; i < 100; i++) {
+		    	$('.kana-container').append('<span class="white">' + whatDoIKnow[rand(0, whatDoIKnow.length - 1)] + '</span>');
+		    }
+    	});
+    });
 
     $('.romaji-container').keyup(function () {
     	if (!timer) {
@@ -170,7 +202,8 @@
     			}, 200);
     		}
     	}
-    	else if (!romajiToHiragana[$(this).text() + 'a']) {
+    	else if (!(romajiToHiragana[$(this).text() + 'a'] || 
+    			   romajiToHiragana[$(this).text() + 'ha'])) {
     		console.log(romajiToHiragana[$(this).html() + 'a']);
     		$(this).html('');
 			var w = $('.white').first().addClass('red').removeClass('white').width();
@@ -182,7 +215,19 @@
     		$('.kana-container').animate({
     			'margin-left': '-=' + $(window).width() / 2 + 'px'
     		});
+    		$('.romaji-container').attr('contenteditable', false);
+    		
     		clearInterval(timer);
+    		timer = null;
+
+    		$('.main-content').slideUp();
+    		$('.main-container').animate({
+    			'margin-top': '-100px'
+    		});
+    		$('.buttons-start').fadeIn();
+    		$('.btn-start .start').text('Restart');
+
+    		started = false;
     	}
     });
 
