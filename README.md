@@ -1,4 +1,4 @@
-type-kana
+Type Kana - A game to help you speed up reading Hiragana / Katakana
 =========
 
 I’ve been learning Japanese for the past few weeks, and while I have learned the Kana, it takes me quite a while to recollect them. So I created a little game to help me memorize it quicker.
