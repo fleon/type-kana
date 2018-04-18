@@ -313,24 +313,14 @@
     		}, 1000);
     	}
     	var kanaTyped = $(this).text();
-    	if (kanaTyped) {
-    		console.log(kanaTyped, $('.white').first().text());
-            if (kanaToRomaji($('.white').first().text()).indexOf(kanaTyped) >= 0) {
-    			$(this).html('');
-    			var w = $('.white').first().addClass('green').removeClass('white').width();
-    			$('.kana-container').animate({
-    				'margin-left': '-=' + w + 'px'
-    			}, 200);
-    			$('.score').html(++score + ' / 100');
-    		} else if ($(this).html() !== 'n'){
-    			$(this).html('');
-    			var w = $('.white').first().addClass('red').removeClass('white').width();
-    			$('.kana-container').animate({
-    				'margin-left': '-=' + w + 'px'
-    			}, 200);
-    		}
-    	}
-    	else if ($(this).text().length >= 3) {
+        if (kanaToRomaji($('.white').first().text()).indexOf(kanaTyped) >= 0) {
+            $(this).html('');
+            var w = $('.white').first().addClass('green').removeClass('white').width();
+            $('.kana-container').animate({
+                'margin-left': '-=' + w + 'px'
+            }, 200);
+            $('.score').html(++score + ' / 100');
+        } else if ($(this).text().length >= 3) {
     		$(this).html('');
 			var w = $('.white').first().addClass('red').removeClass('white').width();
 			$('.kana-container').animate({
