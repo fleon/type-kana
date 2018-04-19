@@ -323,6 +323,15 @@
         } else if (
 			(
 				(
+					$(this).text().length >= 1 && 
+					(
+					    $('.white').first().text() === 'あ' ||
+		        	    $('.white').first().text() === 'い' ||
+		        	    $('.white').first().text() === 'う' ||
+		        	    $('.white').first().text() === 'え' ||
+		        	    $('.white').first().text() === 'お' ||
+					)
+				) || (
 					$(this).text().length >= 2 && 
 					(
 						$('.white').first().text().length === 1 ||
