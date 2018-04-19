@@ -320,7 +320,22 @@
                 'margin-left': '-=' + w + 'px'
             }, 200);
             $('.score').html(++score + ' / 100');
-        } else if ($(this).text().length >= 3) {
+        } else if (
+			(
+				(
+					$(this).text().length >= 2 && 
+					(
+						$('.white').first().text().length === 1 ||
+					    $('.white').first().text() === 'つ' ||
+		        	    $('.white').first().text() === 'ち' ||
+			            $('.white').first().text() === 'し'
+					)
+				) || (
+					$(this).text().length >= 3 && 
+		    		$('.white').first().text().length === 2
+				)
+			)
+		) {
     		$(this).html('');
 			var w = $('.white').first().addClass('red').removeClass('white').width();
 			$('.kana-container').animate({
