@@ -334,9 +334,9 @@
 				) || (
 					$(this).text().length >= 2 && 
 					(
-						$('.white').first().text().length === 1 ||
-					    kanaToRomaji($('.white').first().text()).indexOf('tsu') < 0 ||
-		        	    kanaToRomaji($('.white').first().text()).indexOf('chi') < 0 ||
+						$('.white').first().text().length === 1 &&
+					    kanaToRomaji($('.white').first().text()).indexOf('tsu') < 0 &&
+		        	    kanaToRomaji($('.white').first().text()).indexOf('chi') < 0 &&
 			            kanaToRomaji($('.white').first().text()).indexOf('shi') < 0
 					)
 				) || (
