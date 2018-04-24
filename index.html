@@ -325,19 +325,19 @@
 				(
 					$(this).text().length >= 1 && 
 					(
-					    kanaToRomaji($('.white').first().text()) === 'a' ||
-		        	    kanaToRomaji($('.white').first().text()) === 'i' ||
-		        	    kanaToRomaji($('.white').first().text()) === 'u' ||
-		        	    kanaToRomaji($('.white').first().text()) === 'e' ||
-		        	    kanaToRomaji($('.white').first().text()) === 'o'
+					    kanaToRomaji($('.white').first().text()).indexOf('a') >= 0 ||
+		        	    kanaToRomaji($('.white').first().text()).indexOf('i') >= 0 ||
+		        	    kanaToRomaji($('.white').first().text()).indexOf('u') >= 0 ||
+		        	    kanaToRomaji($('.white').first().text()).indexOf('e') >= 0 ||
+		        	    kanaToRomaji($('.white').first().text()).indexOf('o') >= 0
 					)
 				) || (
 					$(this).text().length >= 2 && 
 					(
 						$('.white').first().text().length === 1 ||
-					    kanaToRomaji($('.white').first().text()) === 'tsu' ||
-		        	    kanaToRomaji($('.white').first().text()) === 'chi' ||
-			            kanaToRomaji($('.white').first().text()) === 'shi'
+					    kanaToRomaji($('.white').first().text()).indexOf('tsu') >= 0 ||
+		        	    kanaToRomaji($('.white').first().text()).indexOf('chi') >= 0 ||
+			            kanaToRomaji($('.white').first().text()).indexOf('shi') >= 0 ||
 					)
 				) || (
 					$(this).text().length >= 3 && 
