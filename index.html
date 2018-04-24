@@ -325,19 +325,19 @@
 				(
 					$(this).text().length >= 1 && 
 					(
-					    $('.white').first().text() === 'あ' ||
-		        	    $('.white').first().text() === 'い' ||
-		        	    $('.white').first().text() === 'う' ||
-		        	    $('.white').first().text() === 'え' ||
-		        	    $('.white').first().text() === 'お'
+					    kanaToRomaji($('.white').first().text()) === 'a' ||
+		        	    kanaToRomaji($('.white').first().text()) === 'i' ||
+		        	    kanaToRomaji($('.white').first().text()) === 'u' ||
+		        	    kanaToRomaji($('.white').first().text()) === 'e' ||
+		        	    kanaToRomaji($('.white').first().text()) === 'o'
 					)
 				) || (
 					$(this).text().length >= 2 && 
 					(
 						$('.white').first().text().length === 1 ||
-					    $('.white').first().text() === 'つ' ||
-		        	    $('.white').first().text() === 'ち' ||
-			            $('.white').first().text() === 'し'
+					    kanaToRomaji($('.white').first().text()) === 'tsu' ||
+		        	    kanaToRomaji($('.white').first().text()) === 'chi' ||
+			            kanaToRomaji($('.white').first().text()) === 'shi'
 					)
 				) || (
 					$(this).text().length >= 3 && 
