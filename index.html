@@ -135,6 +135,11 @@
  				<span class='start'>Start</span>
  				<span class="fui-arrow-right"></span>
  			</a>
+	  <br>
+          <label class="secondary">
+            <input type="checkbox" name="furigana" id="furigana" value="" data-toggle="checkbox" checked="checked">
+            Display furigana on mistakes
+          </label>
      	</div>
      </div>
 	<script src="js/jquery-1.8.3.min.js"></script>
@@ -346,6 +351,12 @@
 			)
 		) {
     		$(this).html('');
+			if($('#furigana').prop('checked')) {
+				var kana = $('.white').first().text();
+				var romaji = kanaToRomaji(kana)[0];
+				var newHtml = '<ruby>' + kana + '<rt>' + romaji + '</rt>' + '</ruby>';
+				$('.white').first().html(newHtml);
+			}
 			var w = $('.white').first().addClass('red').removeClass('white').width();
 			$('.kana-container').animate({
 				'margin-left': '-=' + w + 'px'
