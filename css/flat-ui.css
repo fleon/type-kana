@@ -753,6 +753,9 @@ a.muted:focus {
 .btn.btn-info {
   background-color: #3498db;
 }
+.btn.btn-disabled {
+  background-color: #f0f0;
+}
 .btn.btn-info:hover,
 .btn.btn-info:focus,
 .btn-group:focus .btn.btn-info.dropdown-toggle {

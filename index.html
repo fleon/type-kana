@@ -97,6 +97,22 @@
     .radio.checked .second-icon {
         color: #3498db;
     }
+
+   .chars 
+   {
+   		width:45pt;
+   }
+
+   label.chars {
+   		color: #3498db;   		
+   }
+
+   input.chars {
+   		font-size: 15pt;
+   		text-align: right;
+   		padding: 5px;
+   }
+
     </style>
 </head>
 <body>
@@ -123,6 +139,11 @@
 			</a>
      	</div>
      	<div class="buttons buttons-start">
+
+     		<label>
+     		<input class='chars' type="number" name="num_of_chars_name" id="num_of_chars" value="100"> Chars
+     		</label>	
+
             <label class="radio primary">
             <input type="radio" name="kana" id="hiragana" value="hiragana" data-toggle="radio" checked="checked">
             Hiragana
@@ -279,11 +300,25 @@
     	$('.romaji-container').focus();
     })
 
-    var score = 0, time, timer;
-    var started = false;
-
-    $('.btn-start').click(function () {
+    //disable start button if num of chars is 0 or below
+    $("#num_of_chars").bind('keyup mouseup', function () {
+    	var val = $('#num_of_chars').val();
+    	//console.log(val);            
+    	if (val <= 0) {
+    		$('.btn-start').off("click");
+    		$('.btn-start').removeClass('btn-info');
+    		$('.btn-start').addClass('btn-disable');
+    	} else {
+    		$('.btn-start').on("click", btn_start);
+    		$('.btn-start').removeClass('btn-disable');
+    		$('.btn-start').addClass('btn-info');
+    	}
+    	
+	});
+    
+    function btn_start() {
     	started = true;
+    	count = $('#num_of_chars').val();
     	$(this).parent().fadeOut(200, function () {
     		$('.main-content').slideDown();
     		$('.main-container').animate({
@@ -293,10 +328,10 @@
     		$('.romaji-container').attr('contenteditable', true).focus();
 
     		$('.time').text('0:00');
-    		$('.score').text('0/100');
+    		$('.score').text('0/' + count);
 
     		$('.kana-container').html('').attr('style', '');
-    		for (var i = 0; i < 100; i++) {
+    		for (var i = 0; i < count; i++) {
                 var kanaChar = whatDoIKnow[rand(0, whatDoIKnow.length - 1)];
                 var isKatakana = $('input[name="kana"]:checked').val() == 'katakana';
                 kanaChar = isKatakana ? hiraganaToKatakana(kanaChar) : kanaChar;
@@ -304,7 +339,12 @@
 		    	$('.kana-container').append('<span class="white">' + kanaChar + '</span>');
 		    }
     	});
-    });
+    }
+    var score = 0, time, timer;
+    var started = false;
+    var count = $('#num_of_chars').val();
+
+    $('.btn-start').on("click", btn_start); // enable start btn when app started
 
     $('.romaji-container').keyup(function () {
     	if (!timer) {
@@ -324,7 +364,7 @@
             $('.kana-container').animate({
                 'margin-left': '-=' + w + 'px'
             }, 200);
-            $('.score').html(++score + ' / 100');
+            $('.score').html(++score + ' / ' + count);
         } else if (
 			(
 				(
