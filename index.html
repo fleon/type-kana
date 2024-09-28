@@ -104,7 +104,7 @@
    }
 
    label.chars {
-   		color: #3498db;   		
+   		color: #3498db;
    }
 
    input.chars {
@@ -113,6 +113,43 @@
    		padding: 5px;
    }
 
+   .mistakes-container {
+        margin: auto;
+	    text-align: center;
+        padding: 15px 0 15px 0;
+        background-color: #2c3e50;
+        display: none;
+   }
+
+   table {
+        display: inline-block;
+	    margin: auto;
+        vertical-align: top;
+	    border-collapse: collapse;
+	    padding: 0 10px;
+   }
+
+   #false-chars {
+        margin: auto;
+   }
+
+   #false-chars td, #false th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        color: white;
+   }
+
+   #false-chars tr th {
+        background-color: #7098b3;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border: 2px solid #ddd; /* Add a border */
+   }
+
+   #false-chars td.right{
+        text-align: right;
+   }
     </style>
 </head>
 <body>
@@ -134,9 +171,19 @@
  			<a class="btn btn-huge btn-info btn-embossed mlm">
  				<span class='fui-pause'></span>
 			</a>-->
-			<a class="btn btn-huge btn-info btn-embossed mlm">
+			<a id="btn-counter" class="btn btn-huge btn-info btn-embossed mlm">
  				<span class='fui-checkbox-checked'></span> &nbsp; <span class='score'>0 / 100</span>
 			</a>
+     	</div>
+     	<div class="mistakes-container">
+	     	<table id="false-chars">
+	     		<tr>
+	     			<th>no</th>
+	     			<th>kana</th>
+	     			<th>romaji</th>
+	     			<th>count</th>
+	     		</tr>
+	     	</table>
      	</div>
      	<div class="buttons buttons-start">
 
@@ -296,9 +343,70 @@
     	return Math.floor(Math.random() * (b - a) + a);
     }
 
+    function addMistakeToTable() {
+		// add to number of false characters
+        let table = document.getElementById("false-chars");
+
+        let kanaToFind = false_chars[false_chars.length-1];
+
+        let isUpdated = false;
+
+    	if ($('#false-chars tbody tr').length == 0) {
+	        let newRow = table.insertRow();
+
+	        // Insert new cells into the row
+	        let no = newRow.insertCell();
+	        let kana = newRow.insertCell();
+	        let romaji = newRow.insertCell();
+	        let charCount = newRow.insertCell();
+	        // Add text content to the cells
+	        
+	        no.innerHTML = false_chars.length;
+	        kana.innerHTML = false_chars[false_chars.length-1];
+	        romaji.innerHTML= kanaToRomaji(false_chars[false_chars.length-1]);
+	        charCount.innerHTML = 1;   
+    	}
+
+        //check if kana already exist 
+        $('#false-chars tr').each(function(index) {
+
+        	if ($(this).find('td').eq(1).text() == kanaToFind) {
+        		let count = $(this).find('td').eq(3).text()
+        		$(this).find('td').eq(3).html(Number(count)+1);
+        		isUpdated = true;
+        		return false;
+        	} 
+
+        }); // END for each row
+        	if (isUpdated) return;
+
+        	{
+		        let newRow = table.insertRow();
+
+		        // Insert new cells into the row
+		        let no = newRow.insertCell();
+		        let kana = newRow.insertCell();
+		        let romaji = newRow.insertCell();
+		        let charCount = newRow.insertCell();
+		        
+		        // Add text content to the cells
+		        no.innerHTML = $('#false-chars tr').length-1;
+		        kana.innerHTML = false_chars[false_chars.length-1];
+		        romaji.innerHTML= kanaToRomaji(false_chars[false_chars.length-1]);
+		        charCount.innerHTML = 1;   
+		        return false;
+        	}
+    }
+
     $('body, html').click(function () {
     	$('.romaji-container').focus();
-    })
+    });
+
+    $('#btn-counter').click( function(){ 
+        if (false_chars.length == 0) { return; } 
+
+        $(' .mistakes-container').slideToggle();
+    });
 
     //disable start button if num of chars is 0 or below
     $("#num_of_chars").bind('keyup mouseup', function () {
@@ -315,10 +423,11 @@
     	}
     	
 	});
-    
+
     function btn_start() {
     	started = true;
     	count = $('#num_of_chars').val();
+    	false_chars = [];
     	$(this).parent().fadeOut(200, function () {
     		$('.main-content').slideDown();
     		$('.main-container').animate({
@@ -339,10 +448,25 @@
 		    	$('.kana-container').append('<span class="white">' + kanaChar + '</span>');
 		    }
     	});
+
+
+        let table = document.getElementById("false-chars"); // clear all mistakes table's rows
+        if ($('.mistakes-container').css('display') == 'block') {
+            $('.mistakes-container').slideUp();
+            $('.mistakes-container').css('display', 'hidden');
+        }
+
+        setTimeout(function() {
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+        }, 1000);
     }
     var score = 0, time, timer;
     var started = false;
     var count = $('#num_of_chars').val();
+    var mistakes = 0;
+    var false_chars = [];
 
     $('.btn-start').on("click", btn_start); // enable start btn when app started
 
@@ -358,6 +482,7 @@
     		}, 1000);
     	}
     	var kanaTyped = $(this).text();
+    	// if character is correct
         if (kanaToRomaji($('.white').first().text()).indexOf(kanaTyped) >= 0) {
             $(this).html('');
             var w = $('.white').first().addClass('green').removeClass('white').width();
@@ -390,6 +515,8 @@
 				)
 			)
 		) {
+			mistakes ++;
+			false_chars.push($('.white').first().text());
     		$(this).html('');
 			if($('#furigana').prop('checked')) {
 				var kana = $('.white').first().text();
@@ -401,8 +528,11 @@
 			$('.kana-container').animate({
 				'margin-left': '-=' + w + 'px'
 			}, 200);
+
+			addMistakeToTable();
+
     	}
-    	if (!$('.white').length) {
+    	if (!$('.white').length) {  // all chars has been typed
     		$('.kana-container').animate({
     			'margin-left': '-=' + $(window).width() / 2 + 'px'
     		});
@@ -419,6 +549,11 @@
     		});
     		$('.buttons-start').fadeIn();
     		$('.btn-start .start').text('Restart');
+
+            //flash counter button on mistake found
+            if (false_chars.length > 0) {
+                $('#btn-counter').fadeOut(500).fadeIn(1000).fadeOut(500).fadeIn(1000).fadeOut(500).fadeIn(1000);
+            }
 
     		started = false;
     	}
